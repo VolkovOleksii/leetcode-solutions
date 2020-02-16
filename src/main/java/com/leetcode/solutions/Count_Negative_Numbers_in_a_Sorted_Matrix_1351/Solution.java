@@ -14,6 +14,10 @@ public class Solution {
         System.out.println(new Solution().countNegatives(new int[][]{{4, 3, 2, -1}, {3, 2, 1, -1}, {1, 1, -1, -2}, {-1, -1, -2, -3}}));
     }
 
+    /**
+     * T(n,m) = O(n+m)
+     * where n,m - number of columns and rows
+     */
     public int countNegatives(int[][] grid) {
         if (grid.length == 0) return 0;
         int ans = 0;
