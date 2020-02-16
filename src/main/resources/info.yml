@@ -2,7 +2,15 @@ easy:
   - 1351
 
 medium:
-  - none
+  - 1352
 
 hard:
   - none
+
+solution:
+  own:
+    - 1351
+  community:
+    - 1352
+  aaaaaaaaa:
+    - none
