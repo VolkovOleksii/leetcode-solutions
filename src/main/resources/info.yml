@@ -1,5 +1,6 @@
 easy:
   - 1346
+  - 1347
   - 1351
 
 medium:
@@ -11,6 +12,7 @@ hard:
 solution:
   own:
     - 1346
+    - 1347
     - 1351
   community:
     - 1352
