@@ -1,11 +1,10 @@
 package com.leetcode.solutions.Jump_Game_IV_1345;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 
 /**
  * 1345. Jump Game IV
@@ -54,71 +53,52 @@ import java.util.Set;
 public class Solution {
 
     public static void main(String[] args) {
-        System.out.println(new Solution().minJumps(new int[]{7,6,9,6,9,6,9,7}));
+        System.out.println(new Solution().minJumps(new int[]{100, -23, -23, 404, 100, 23, 23, 23, 3, 404}));
     }
 
     /**
-     * The same problem, that in previous solution
-     * Time Limit Exceeded
+     * Based on https://leetcode.com/problems/jump-game-iv/discuss/502699/JavaC%2B%2B-BFS-Solution-Clean-code-O(N)
+     * T(n) = O(n)
+     * S(n) = O(n)
      */
     public int minJumps(int[] arr) {
         int n = arr.length;
         if (n < 3) return n - 1;
 
-        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        Map<Integer, List<Integer>> connectedCells = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            graph.put(i, new HashSet<>());
+            connectedCells.computeIfAbsent(arr[i], (key) -> new LinkedList<>()).add(i);
         }
 
-        Map<Integer, Set<Integer>> connectedNodes = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            connectedNodes.putIfAbsent(arr[i], new HashSet<>());
-            connectedNodes.get(arr[i]).add(i);
-        }
+        boolean[] visitedCells = new boolean[n];
+        Queue<Integer> queue = new LinkedList<>();
 
-        for (int i = 1; i < n - 1; i++) {
-            Set<Integer> vertexes = graph.get(i);
-            vertexes.addAll(connectedNodes.get(arr[i]));
-            vertexes.add(i + 1);
-            vertexes.add(i - 1);
-        }
-        graph.get(0).addAll(connectedNodes.get(arr[0]));
-        graph.get(0).add(1);
-        graph.get(n - 1).addAll(connectedNodes.get(arr[n - 1]));
-        graph.get(n - 1).add(n - 2);
+        visitedCells[0] = true;
+        queue.offer(0);
+        int length = 0;
 
-        Set<Integer> visitedVertexes = new HashSet<>();
-        Queue<Pair> routes = new LinkedList<>();
+        while (!queue.isEmpty()) {
+            for (int i = queue.size(); i > 0; i--) {
+                Integer curr = queue.poll();
 
-        Integer targetVertex = 0;
-        routes.offer(new Pair(0, n - 1));
-        visitedVertexes.add(n - 1);
+                if (curr == n - 1) return length;
 
-        Pair curr;
-        while ((curr = routes.poll()) != null) {
-            final int length = curr.depth;
-            if (graph.get(curr.to).contains(targetVertex)) return length + 1;
+                List<Integer> routs = connectedCells.get(arr[curr]);
+                routs.add(curr + 1);
+                routs.add(curr - 1);
 
-            graph.get(curr.to).forEach(
-                    node -> {
-                        if (!visitedVertexes.contains(node)) {
-                            visitedVertexes.add(node);
-                            routes.offer(new Pair(length + 1, node));
-                        }
+                for (int next : routs) {
+                    if (next >= 0 && next < n && !visitedCells[next]) {
+                        visitedCells[next] = true;
+                        queue.offer(next);
                     }
-            );
+                }
+
+                routs.clear();
+            }
+            length++;
         }
 
         throw new RuntimeException();
-    }
-
-    private static class Pair {
-        public final int depth;
-        public final Integer to;
-
-        private Pair(int depth, Integer to) {
-            this.depth = depth;
-            this.to = to;
-        }
     }
 }

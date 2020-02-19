@@ -7,14 +7,16 @@ medium:
   - 1352
 
 hard:
-  - none
+  - 1345
 
 solution:
   own:
+    - 1345 (time limit exceeded)
     - 1346
     - 1347
     - 1351
   community:
+    - 1345
     - 1352
   aaaaaaaaa:
     - none

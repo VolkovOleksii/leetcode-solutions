@@ -3,6 +3,9 @@ arrays:
   - 1351
   - 1352
 
+bfs:
+  - 1345
+
 binary-search:
   - 1351?
 
