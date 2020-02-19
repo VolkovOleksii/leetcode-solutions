@@ -1,9 +1,7 @@
 package com.leetcode.solutions.Jump_Game_IV_1345;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
@@ -56,114 +54,70 @@ import java.util.Set;
 public class Solution {
 
     public static void main(String[] args) {
-        System.out.println(new Solution().minJumps(new int[]{11,22,7,7,7,7,7,7,7,22,13}));
+        System.out.println(new Solution().minJumps(new int[]{7,6,9,6,9,6,9,7}));
     }
 
+    /**
+     * The same problem, that in previous solution
+     * Time Limit Exceeded
+     */
     public int minJumps(int[] arr) {
-        if (arr.length < 2) return arr.length - 1;
+        int n = arr.length;
+        if (n < 3) return n - 1;
 
-        Map<Integer, Node> graph = new HashMap<>();
-        for (int i = 0; i < arr.length; i++) {
-            graph.put(i, new Node(i));
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            graph.put(i, new HashSet<>());
         }
 
-        Map<Integer, Set<Node>> connectedNodes = new HashMap<>();
-        for (int i = 0; i < arr.length; i++) {
+        Map<Integer, Set<Integer>> connectedNodes = new HashMap<>();
+        for (int i = 0; i < n; i++) {
             connectedNodes.putIfAbsent(arr[i], new HashSet<>());
-            connectedNodes.get(arr[i]).add(graph.get(i));
+            connectedNodes.get(arr[i]).add(i);
         }
 
-        for (int i = 0; i < arr.length; i++) {
-            Node node = graph.get(i);
-            node.addAll(connectedNodes.get(arr[i]));
-            node.add(graph.get(i + 1));
-            node.add(graph.get(i - 1));
+        for (int i = 1; i < n - 1; i++) {
+            Set<Integer> vertexes = graph.get(i);
+            vertexes.addAll(connectedNodes.get(arr[i]));
+            vertexes.add(i + 1);
+            vertexes.add(i - 1);
         }
+        graph.get(0).addAll(connectedNodes.get(arr[0]));
+        graph.get(0).add(1);
+        graph.get(n - 1).addAll(connectedNodes.get(arr[n - 1]));
+        graph.get(n - 1).add(n - 2);
 
-        Set<Node> visitedNodes = new HashSet<>();
-        Queue<Route> routes = new LinkedList<>();
+        Set<Integer> visitedVertexes = new HashSet<>();
+        Queue<Pair> routes = new LinkedList<>();
 
-        Node targetNode = graph.get(0);
-        routes.offer(new Route(0, graph.get(arr.length - 1)));
-        visitedNodes.add(graph.get(arr.length - 1));
+        Integer targetVertex = 0;
+        routes.offer(new Pair(0, n - 1));
+        visitedVertexes.add(n - 1);
 
-        Route curr;
+        Pair curr;
         while ((curr = routes.poll()) != null) {
-            final int length = curr.lengthTo;
-            if (curr.to.contains(targetNode)) return length + 1;
+            final int length = curr.depth;
+            if (graph.get(curr.to).contains(targetVertex)) return length + 1;
 
-            curr.to.getNodes().forEachRemaining(
+            graph.get(curr.to).forEach(
                     node -> {
-                        if (visitedNodes.add(node)) routes.offer(new Route(length + 1, node));
+                        if (!visitedVertexes.contains(node)) {
+                            visitedVertexes.add(node);
+                            routes.offer(new Pair(length + 1, node));
+                        }
                     }
             );
         }
 
-        /*
-         * Time Limit Exceeded, so dirty hack above
-         */
-//        Node targetNode = graph.get(arr.length - 1);
-//        routes.offer(new Route(0, graph.get(0)));
-//        visitedNodes.add(graph.get(0));
-//
-//        Route curr = null;
-//
-//        while ((curr = routes.poll()) != null) {
-//            final int length = curr.lengthTo;
-//            if (curr.to.id == targetNode.id) return length;
-//
-//            curr.to.getNodes().forEachRemaining(
-//                    node -> {
-//                        if (visitedNodes.add(node)) routes.offer(new Route(length + 1, node));
-//                    }
-//            );
-//        }
-
         throw new RuntimeException();
     }
 
-    private static class Node {
-        public final int id;
-        private final Set<Node> nodes;
+    private static class Pair {
+        public final int depth;
+        public final Integer to;
 
-        Node(int id) {
-            this.id = id;
-            this.nodes = new HashSet<>();
-        }
-
-        Iterator<Node> getNodes() {
-            return nodes.iterator();
-        }
-
-        boolean contains(Node node) {
-            return nodes.contains(node);
-        }
-
-        void add(Node node) {
-            if (node != null) nodes.add(node);
-        }
-
-        void addAll(Collection<Node> nodes) {
-            this.nodes.addAll(nodes);
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            return this == o;
-        }
-
-        @Override
-        public int hashCode() {
-            return id;
-        }
-    }
-
-    private static class Route {
-        public final int lengthTo;
-        public final Node to;
-
-        public Route(int lengthTo, Node to) {
-            this.lengthTo = lengthTo;
+        private Pair(int depth, Integer to) {
+            this.depth = depth;
             this.to = to;
         }
     }
