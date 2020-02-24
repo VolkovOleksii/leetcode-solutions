@@ -2,12 +2,16 @@ arrays:
   - 1346
   - 1351
   - 1352
+  - 1356
 
 bfs:
   - 1345
 
 binary-search:
   - 1351?
+
+bit-manipulation:
+  - 1356
 
 design:
   - 1352
