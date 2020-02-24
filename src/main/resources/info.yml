@@ -7,6 +7,7 @@ easy:
 medium:
   - 1352
   - 1357
+  - 1358
 
 hard:
   - 1345
@@ -19,8 +20,10 @@ solution:
     - 1351
     - 1356
     - 1357
+    - 1358 (not clear)
   community:
     - 1345
     - 1352
+    - 1358
   aaaaaaaaa:
     - none
