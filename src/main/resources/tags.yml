@@ -17,6 +17,12 @@ design:
   - 1352
   - 1357
 
+dynamic-programming:
+  - 1359
+
+math:
+  - 1359
+
 string:
   - 1347
   - 1358

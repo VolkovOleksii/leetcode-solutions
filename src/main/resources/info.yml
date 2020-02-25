@@ -11,6 +11,7 @@ medium:
 
 hard:
   - 1345
+  - 1359
 
 solution:
   own:
@@ -21,6 +22,7 @@ solution:
     - 1356
     - 1357
     - 1358 (not clear)
+    - 1359
   community:
     - 1345
     - 1352
