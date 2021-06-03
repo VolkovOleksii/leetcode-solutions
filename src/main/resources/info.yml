@@ -1,4 +1,5 @@
 easy:
+  - 226
   - 1346
   - 1347
   - 1351
@@ -15,6 +16,7 @@ hard:
 
 solution:
   own:
+    - 226
     - 1345 (time limit exceeded)
     - 1346
     - 1347
