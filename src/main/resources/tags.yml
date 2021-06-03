@@ -1,4 +1,5 @@
 arrays:
+  - 695
   - 1346
   - 1351
   - 1352
@@ -12,6 +13,9 @@ binary-search:
 
 bit-manipulation:
   - 1356
+
+depth-first-search:
+  - 695
 
 design:
   - 1352

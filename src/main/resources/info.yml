@@ -6,6 +6,7 @@ easy:
   - 1356
 
 medium:
+  - 695
   - 1352
   - 1357
   - 1358
@@ -17,6 +18,7 @@ hard:
 solution:
   own:
     - 226
+    - 695
     - 1345 (time limit exceeded)
     - 1346
     - 1347
