@@ -12,11 +12,13 @@ medium:
   - 1358
 
 hard:
+  - 10
   - 1345
   - 1359
 
 solution:
   own:
+    - 10
     - 226
     - 695
     - 1345 (time limit exceeded)

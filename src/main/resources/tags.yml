@@ -5,6 +5,9 @@ arrays:
   - 1352
   - 1356
 
+backtracking:
+  - 10
+
 bfs:
   - 1345
 
@@ -22,12 +25,14 @@ design:
   - 1357
 
 dynamic-programming:
+  - 10
   - 1359
 
 math:
   - 1359
 
 string:
+  - 10
   - 1347
   - 1358
 
